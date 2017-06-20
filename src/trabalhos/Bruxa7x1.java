@@ -1,5 +1,9 @@
 package trabalhos;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  * 
  * @author vitorh.brangioni
@@ -7,68 +11,46 @@ package trabalhos;
  */
 public class Bruxa7x1 {
 
-	
-	public Double calcule(Integer x, Integer y, String operador) {
+	public static Integer calcule(Integer x, Integer y, String operador) {
 		
-		Double result = null;
+		Integer result = null;
 		
-		int indexOfX = x.toString().indexOf('7');
-		int indexOfY = y.toString().indexOf('7');
-		
-		if (indexOfX > -1) {
-			String newValue = "";
-			char num;
-			for (int i = 0; i < x.toString().length(); i++) {
-				num = x.toString().charAt(i);
-				if (num == '7') {
-					num = '0';
-				}
-				newValue += num;
-			}
-			x = Integer.parseInt(newValue);
-		}
-		if (indexOfY > -1) {
-			String newValue = "";
-			char num;
-			for (int i = 0; i < y.toString().length(); i++) {
-				num = y.toString().charAt(i);
-				if (num == '7') {
-					num = '0';
-				}
-				newValue += num;
-			}
-			y = Integer.parseInt(newValue);
-		}
+		x = Integer.parseInt(x.toString().replaceAll("7", "0"));
+		y = Integer.parseInt(y.toString().replaceAll("7", "0"));
 		
 		switch (operador) {
 		case "+":
-			result = (double) (x + y);
+			result = (x + y);
 			break;
 
 		case "-":
-			result = (double) (x - y);
+			result = (x - y);
 			break;
 			
 		case "x":
-			result = (double) (x * y);
+			result = (x * y);
 			break;
 			
 		case "/":
-			result = (double) (x / y);
+			result = (x / y);
 			break;
 		}
-		
-		String stringResult = String.valueOf(result);
-		String newValue = "";
-			
-		for (int i = 0; i < stringResult.length(); i++) {
-			char letra = stringResult.charAt(i);
-			if (letra == '7') {
-				letra = '0';
-			}
-			newValue += letra;
-		}
-		return Double.parseDouble(newValue);
+		return Integer.parseInt(result.toString().replaceAll("7", "0"));
 	}
+	
+	public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String read = br.readLine();
+        
+        while (read != null && !read.equals("")) {
+            String[] entrada = read.split(" ");
+            Integer x = Integer.parseInt(entrada[0]);
+            String operator = String.valueOf(entrada[1].charAt(0));
+            Integer y = Integer.parseInt(entrada[2]);
+            System.out.println(calcule(x, y, operator));
+            read = br.readLine();
+        }
+        br.close();
+    }
 		
 }
